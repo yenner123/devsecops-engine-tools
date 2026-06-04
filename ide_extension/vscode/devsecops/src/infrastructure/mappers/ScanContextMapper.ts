@@ -3,6 +3,7 @@ import {
     IIacContext, 
     IImageScanContext, 
     IDependenciesScanContext,
+    ILicenseContext,
     ISeverityCounts,
     Mappers 
 } from "../../domain/model/mappers/Mappers";
@@ -104,11 +105,35 @@ export class ScanContextMapper {
     }
 
     /**
+     * Maps License scan context JSON to findings
+     */
+    public static mapLicenseScanContext(contextJson: string): { findings: Finding[]; severityCounts: ISeverityCounts | null } {
+        try {
+            const parsed = JSON.parse(contextJson) as unknown;
+
+            if (!parsed || !Array.isArray(parsed)) {
+                return { findings: [], severityCounts: null };
+            }
+
+            const findings: Finding[] = parsed.map((context: ILicenseContext) =>
+                Mappers.mapLicenseContextToFinding(context)
+            );
+
+            const severityCounts = this.calculateSeverityCounts(findings);
+
+            return { findings, severityCounts };
+        } catch (error) {
+            console.error('Error mapping License scan context:', error);
+            return { findings: [], severityCounts: null };
+        }
+    }
+
+    /**
      * Generic mapper that selects the appropriate scan type mapper
      */
     public static mapScanContext(
         contextJson: string, 
-        scanType: 'image' | 'dependencies' | 'iac'
+        scanType: 'image' | 'dependencies' | 'iac' | 'license'
     ): { findings: Finding[]; severityCounts: ISeverityCounts | null } {
         switch (scanType) {
             case 'image':
@@ -117,6 +142,8 @@ export class ScanContextMapper {
                 return this.mapDependenciesScanContext(contextJson);
             case 'iac':
                 return this.mapIacScanContext(contextJson);
+            case 'license':
+                return this.mapLicenseScanContext(contextJson);
             default:
                 console.error(`Unknown scan type: ${String(scanType)}`);
                 return { findings: [], severityCounts: null };
@@ -178,7 +205,7 @@ export class ScanContextMapper {
      */
     public static extractContextFromOutput(
         stdout: string, 
-        scanType: 'image' | 'dependencies' | 'iac'
+        scanType: 'image' | 'dependencies' | 'iac' | 'license'
     ): IScanResult {
         const match = stdout.match(this.CONTEXT_REGEX);
         
@@ -215,7 +242,7 @@ export class ScanContextMapper {
      */
     public static parseAndMapContext(
         contextJson: string,
-        scanType: 'image' | 'dependencies' | 'iac',
+        scanType: 'image' | 'dependencies' | 'iac' | 'license',
         normalOutput: string = ''
     ): IScanResult {
         try {
@@ -229,6 +256,8 @@ export class ScanContextMapper {
                 contextArray = parsed.dependencies_context;
             } else if (scanType === 'iac' && parsed.iac_context) {
                 contextArray = parsed.iac_context;
+            } else if (scanType === 'license' && parsed.license_context) {
+                contextArray = parsed.license_context;
             } else if (Array.isArray(parsed)) {
                 // Fallback: direct array
                 contextArray = parsed;
@@ -247,6 +276,10 @@ export class ScanContextMapper {
             } else if (scanType === 'iac') {
                 findings = contextArray.map((ctx: IIacContext) => 
                     Mappers.mapIacContextToFinding(ctx)
+                );
+            } else if (scanType === 'license') {
+                findings = contextArray.map((ctx: ILicenseContext) =>
+                    Mappers.mapLicenseContextToFinding(ctx)
                 );
             }
 

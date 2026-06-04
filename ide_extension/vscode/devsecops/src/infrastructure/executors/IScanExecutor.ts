@@ -42,7 +42,7 @@ export interface IScanExecutor {
  * Configuration for scan execution
  */
 export interface IScanExecutionConfig {
-    scanType: 'image' | 'dependencies' | 'iac' | 'secrets';
+    scanType: 'image' | 'dependencies' | 'iac' | 'license' | 'secrets';
     target: string;  // Image name, folder path, etc.
     
     // Scanner configuration

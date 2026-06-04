@@ -39,7 +39,7 @@ export class ResultsTreeDataProvider implements vscode.TreeDataProvider<vscode.T
   public addScanResult(
     label: string,
     findings: Finding[],
-    sourceType: "iac" | "image" | "dependencies",
+    sourceType: "iac" | "image" | "dependencies" | "license",
     scanPath?: string,
     outputChannel?: vscode.OutputChannel
   ): void {
@@ -85,7 +85,7 @@ export class ResultsTreeDataProvider implements vscode.TreeDataProvider<vscode.T
    */
   public addLoadingScanResult(
     label: string,
-    sourceType: "iac" | "image" | "dependencies",
+    sourceType: "iac" | "image" | "dependencies" | "license",
     outputChannel?: vscode.OutputChannel
   ): string {
     const timestamp = new Date();
@@ -104,7 +104,7 @@ export class ResultsTreeDataProvider implements vscode.TreeDataProvider<vscode.T
   public updateScanResult(
     scanId: string,
     findings: Finding[],
-    sourceType: "iac" | "image" | "dependencies",
+    sourceType: "iac" | "image" | "dependencies" | "license",
     scanPath?: string
   ): void {
     const scanItem = this.scanResults.find(item => item.scanId === scanId);
@@ -260,7 +260,7 @@ export class ResultsTreeDataProvider implements vscode.TreeDataProvider<vscode.T
   private compareFindings(
     newFindings: Finding[],
     oldFindings: FindingItem[],
-    sourceType: "iac" | "image" | "dependencies",
+    sourceType: "iac" | "image" | "dependencies" | "license",
     scanPath?: string
   ): { items: FindingItem[], summary: { delta: number, oldCount: number, newCount: number } } {
     const oldCount = oldFindings.length;

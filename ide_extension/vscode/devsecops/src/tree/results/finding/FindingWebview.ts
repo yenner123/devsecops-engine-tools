@@ -67,6 +67,8 @@ function getSourceTypeFromModule(module: string): string {
             return 'image';
         case 'engine_dependencies':
             return 'dependencies';
+        case 'engine_license':
+            return 'license';
         case 'engine_secrets':
             return 'secrets';
         default:

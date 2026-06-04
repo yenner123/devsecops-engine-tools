@@ -55,6 +55,17 @@ export interface IDependenciesScanContext {
   priority: string;
 }
 
+export interface ILicenseContext {
+  name: string;
+  version: string;
+  licenses: string[];
+  policy_applied: string;
+  policy_reason: string;
+  policy_pattern_matched: string;
+  severity: string;
+  priority: string;
+}
+
 export interface ISeverityCounts {
   very_critical: string;
   critical: string;
@@ -136,6 +147,34 @@ export class Mappers {
         fixed_version: dependenciesScanContext.fixed_version.join(",") || "",
         impact_paths: formatImpactPathsCollapsed(dependenciesScanContext.impact_paths),
         impact_paths_prompt: formatImpactPathsForPrompt(dependenciesScanContext.impact_paths)
+      }
+    );
+  }
+
+  public static mapLicenseContextToFinding(
+    licenseContext: ILicenseContext
+  ): Finding {
+    const packageName = licenseContext.name || "unknown-package";
+    const packageVersion = licenseContext.version || "";
+    const policyApplied = licenseContext.policy_applied || "unknown";
+    const policyReason = licenseContext.policy_reason || "No policy reason provided";
+
+    return new Finding(
+      packageName,
+      licenseContext.severity || "unknown",
+      licenseContext.priority || "",
+      `${packageName}${packageVersion ? `@${packageVersion}` : ""}`,
+      `License policy ${policyApplied}: ${policyReason}`,
+      "engine_license",
+      "GRANT",
+      [],
+      {
+        name: packageName,
+        version: packageVersion,
+        licenses: (licenseContext.licenses || []).join(", "),
+        policy_applied: policyApplied,
+        policy_reason: policyReason,
+        policy_pattern_matched: licenseContext.policy_pattern_matched || ""
       }
     );
   }

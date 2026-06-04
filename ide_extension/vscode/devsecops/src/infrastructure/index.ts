@@ -13,6 +13,7 @@ export { ScanExecutionOrchestrator } from './executors/ScanExecutionOrchestrator
 export { ImageScanner } from './scanners/ImageScanner';
 export { DependenciesScanner } from './scanners/DependenciesScanner';
 export { IacScanner } from './scanners/IacScanner';
+export { LicenseScanner } from './scanners/LicenseScanner';
 
 // Clients
 export { RestClient } from './clients/RestClient';

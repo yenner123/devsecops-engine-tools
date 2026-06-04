@@ -197,6 +197,7 @@ export class LocalDockerExecutor implements IScanExecutor {
             'iac': 'iac_context',
             'dependencies': 'dependencies_context',
             'image': 'container_context',
+            'license': 'license_context',
             'secrets': 'secrets_context'
         };
 

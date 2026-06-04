@@ -266,6 +266,10 @@ export class RemoteMicroserviceExecutor implements IScanExecutor {
             case 'image':
                 config['--tool'] = 'trivy';
                 break;
+
+            case 'license':
+                config['--tool'] = scanConfig.additionalArgs?.['--tool'] || 'grant';
+                break;
         }
 
         return JSON.stringify(config);
@@ -278,7 +282,8 @@ export class RemoteMicroserviceExecutor implements IScanExecutor {
         const practiceMap: Record<string, string> = {
             'iac': 'engine_iac',
             'dependencies': 'engine_dependencies',
-            'image': 'engine_container'
+            'image': 'engine_container',
+            'license': 'engine_license'
         };
 
         return practiceMap[scanType] || scanType;
@@ -668,7 +673,7 @@ export class RemoteMicroserviceExecutor implements IScanExecutor {
                 
                 // Fallback: Check if response contains context data at root level
                 if (jsonResponse.context || jsonResponse.iac_context || 
-                    jsonResponse.dependencies_context || jsonResponse.container_context) {
+                    jsonResponse.dependencies_context || jsonResponse.container_context || jsonResponse.license_context) {
                     outputChannel.appendLine('✓ Context extracted from root level');
                     return JSON.stringify(jsonResponse);
                 }

@@ -60,6 +60,19 @@ export class PracticesTreeDataProvider implements vscode.TreeDataProvider<vscode
     dependenciesScanItem.tooltip = "Scan a folder for dependencies vulnerabilities like npm, pip, gradle, maven, yarn, etc.";
     practices.push(dependenciesScanItem);
 
+    const licenseScanItem = new vscode.TreeItem(
+      "License Scan",
+      vscode.TreeItemCollapsibleState.None
+    );
+    licenseScanItem.command = {
+      command: "devsecops.licenseScan",
+      title: "LICENSE_SCAN",
+      arguments: [licenseScanItem],
+    };
+    licenseScanItem.iconPath = new vscode.ThemeIcon("law");
+    licenseScanItem.tooltip = "Scan a folder to classify dependency licenses with GRANT policy";
+    practices.push(licenseScanItem);
+
     return Promise.resolve(practices);
   }
 }

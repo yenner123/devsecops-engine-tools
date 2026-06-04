@@ -5,6 +5,8 @@ import { ImageScanner } from "../infrastructure/scanners/ImageScanner";
 import { ImageScanUseCase } from "../domain/usecase/ImageScanUseCase";
 import { DependenciesScanUseCase } from "../domain/usecase/DependenciesScanUseCase";
 import { DependenciesScanner } from "../infrastructure/scanners/DependenciesScanner";
+import { LicenseScanUseCase } from "../domain/usecase/LicenseScanUseCase";
+import { LicenseScanner } from "../infrastructure/scanners/LicenseScanner";
 import ContainerEngineManager from "../infrastructure/helper/ContainerEngineManager";
 import { ScanConfiguration } from "../domain/model/ScanConfiguration";
 import { ScanConfigurationService } from "../infrastructure/config/ScanConfigurationService";
@@ -28,6 +30,13 @@ export async function dependenciesScanRequest(): Promise<DependenciesScanUseCase
     const engineToolsVersion = await resolveAndValidateVersion();
     const dependenciesScanUseCase = new DependenciesScanUseCase(new DependenciesScanner(), engineToolsVersion, containerEnginePath);
     return dependenciesScanUseCase;
+}
+
+export async function licenseScanRequest(): Promise<LicenseScanUseCase> {
+    const containerEnginePath = ContainerEngineManager.getContainerEnginePath();
+    const engineToolsVersion = await resolveAndValidateVersion();
+    const licenseScanUseCase = new LicenseScanUseCase(new LicenseScanner(), engineToolsVersion, containerEnginePath);
+    return licenseScanUseCase;
 }
 
 async function resolveAndValidateVersion(): Promise<string> {

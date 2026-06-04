@@ -210,6 +210,10 @@
         "title": "DevSecOps Dependencies Scan"
       },
       {
+        "command": "devsecops.licenseScan",
+        "title": "DevSecOps License Scan"
+      },
+      {
         "command": "devsecops.openWithDiagnostic",
         "title": "Open File with Security Diagnostic Highlighting"
       },

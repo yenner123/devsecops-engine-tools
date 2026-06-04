@@ -34,7 +34,7 @@ export class DevSecOpsTreeDataProvider
   public addScanResult(
     label: string,
     findings: Finding[],
-    sourceType: "iac" | "image" | "dependencies",
+    sourceType: "iac" | "image" | "dependencies" | "license",
     scanPath?: string
   ): void {
     const timestamp = new Date();

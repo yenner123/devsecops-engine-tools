@@ -7,7 +7,7 @@ export class FindingItem extends vscode.TreeItem {
   constructor(
     public readonly finding: Finding,
     private readonly scanPath?: string,
-    private readonly sourceType?: "iac" | "image" | "dependencies"
+    private readonly sourceType?: "iac" | "image" | "dependencies" | "license"
   ) {
     super(finding.getDescription() || "Unknown Issue", vscode.TreeItemCollapsibleState.None);
     

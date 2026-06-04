@@ -233,7 +233,7 @@ export class MetricsService {
         findings: Finding[],
         severityCounts: ISeverityCounts | null,
         scanResult: boolean,
-        scanType: "engine_iac" | "engine_container" | "engine_dependencies",
+        scanType: "engine_iac" | "engine_container" | "engine_dependencies" | "engine_license",
         executionMode: 'local-docker' | 'remote-microservice' = 'local-docker',
         scanDurationMs: number = 0
     ): Promise<void> {
@@ -297,7 +297,7 @@ export class MetricsService {
      */
     async collectFailedScanMetrics(
         elementToScan: string,
-        scanType: "engine_iac" | "engine_container" | "engine_dependencies",
+        scanType: "engine_iac" | "engine_container" | "engine_dependencies" | "engine_license",
         executionMode: 'local-docker' | 'remote-microservice' = 'local-docker',
         scanDurationMs: number = 0
     ): Promise<void> {
