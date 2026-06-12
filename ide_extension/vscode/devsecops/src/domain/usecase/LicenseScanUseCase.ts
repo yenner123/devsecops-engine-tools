@@ -39,7 +39,7 @@ export class LicenseScanUseCase implements ILicenseScanUseCase {
           engineToolsVersion: this.containerImageVersion,
           containerEnginePath: this.containerEnginePath,
           additionalArgs: {
-            "--tool": "grant",
+            "--tool": "cdxgen"
           },
         };
 

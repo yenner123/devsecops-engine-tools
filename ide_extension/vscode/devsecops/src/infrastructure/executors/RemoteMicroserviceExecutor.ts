@@ -268,7 +268,7 @@ export class RemoteMicroserviceExecutor implements IScanExecutor {
                 break;
 
             case 'license':
-                config['--tool'] = scanConfig.additionalArgs?.['--tool'] || 'grant';
+                config['--tool'] = scanConfig.additionalArgs?.['--tool'] || 'cdxgen';
                 break;
         }
 

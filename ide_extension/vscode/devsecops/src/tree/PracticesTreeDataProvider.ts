@@ -70,7 +70,7 @@ export class PracticesTreeDataProvider implements vscode.TreeDataProvider<vscode
       arguments: [licenseScanItem],
     };
     licenseScanItem.iconPath = new vscode.ThemeIcon("law");
-    licenseScanItem.tooltip = "Scan a folder to classify dependency licenses with GRANT policy";
+    licenseScanItem.tooltip = "Scan a folder to classify dependency licenses and identify potential legal risks";
     practices.push(licenseScanItem);
 
     return Promise.resolve(practices);

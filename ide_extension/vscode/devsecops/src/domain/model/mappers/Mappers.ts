@@ -166,7 +166,7 @@ export class Mappers {
       `${packageName}${packageVersion ? `@${packageVersion}` : ""}`,
       `License policy ${policyApplied}: ${policyReason}`,
       "engine_license",
-      "GRANT",
+      "CDXGEN",
       [],
       {
         name: packageName,
