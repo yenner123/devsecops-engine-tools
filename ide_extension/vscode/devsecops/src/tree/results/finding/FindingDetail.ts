@@ -33,17 +33,20 @@ export function findingDetailWebview(finding: Finding, sourceType?: string): str
 
     // Generate Copilot buttons based on source type
     function generateCopilotButtons(): string {
+        const fixLabel = sourceType === 'license' ? 'Fix License Finding' : 'Fix with Copilot';
+        const explainLabel = sourceType === 'license' ? 'Explain License Finding' : 'Explain Vulnerability';
+
         let buttons = `
             <div class="copilot-actions">
                 <h3>🤖 AI Assistant Actions</h3>
                 <div class="button-group">
                     <button class="copilot-button fix-button" onclick="fixWithCopilot()">
                         <span class="codicon codicon-lightbulb"></span>
-                        Fix with Copilot
+                        ${fixLabel}
                     </button>
                     <button class="copilot-button explain-button" onclick="explainWithCopilot()">
                         <span class="codicon codicon-info"></span>
-                        Explain Vulnerability
+                        ${explainLabel}
                     </button>`;
         
         if (sourceType === 'dependencies') {
